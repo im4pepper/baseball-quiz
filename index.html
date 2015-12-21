@@ -11,6 +11,27 @@
 <body>
 	<header class="masthead">
 		<h1>Test Your Baseball IQ</h1>
+
+		<!-- Quiz Instructions -->
+			<div class="overlay" id="instruct">
+				<div class="content">
+					<h3>How It Works</h3>
+					<div>
+						<p>This is a simple, multiple choice baseball quiz. The quiz goes like this: </p>
+						<hr>
+						<ul>
+							<li>1. A baseball related question is posed, and possible solutions are provided. </li>
+							<li>2. You will select from the possible solutions simply by clicking on one of them.</li>
+							<li>3. Once you've made a selection, the correct answer will be provided, and your quiz progress will be noted.</li>
+							<li>4. Once you've completed the quiz, your total results will be displayed.</li>
+						</ul>
+						<hr>
+						<p>Ready to go?</p>
+						<a class="close" href="#">Let's Hit It!</a>
+					</div>
+				</div>
+			</div>
+
 	</header>
 	<section class="quiz">
 	<p class="question" id="question">How many outs are there in an inning?</p>
@@ -18,7 +39,7 @@
 	<button type="button" class="solution" id="solution2">6</button>
 	<button type="button" class="solution" id="solution3">9</button>
 	<p class="answer" id="answer">Each team gets 3 outs in their half of the inning.</p>
-	<button type="button" class="rules" name="rules">QUIZ RULES</button>
+	<a href="#" class="instruction"><button type="button" class="rules" name="rules">QUIZ RULES</button></a>
 	<div class="progress" id="Q1"></div>
 	<div class="progress" id="Q2"></div>
 	<div class="progress" id="Q3"></div>
