@@ -29,17 +29,11 @@ $(document).ready(function(){
     }
     ]
 
-    var currentQuestion = 0
-
-    for (var i = 0, 1 = data.length; i < 1; i++) {
-        var v = data[i];
-        // input some jquery
-        currentQuestion++
-    }
 
     /*--- Display information modal box ---*/
     $(".instruction").click(function(){
         $(".overlay").fadeIn(800);
+        console.log("quiz rules functioning");
 
     });
 
