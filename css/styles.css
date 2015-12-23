@@ -24,6 +24,10 @@ h1 {
   letter-spacing: 0.03em;
 }
 
+a{
+	text-decoration: none;
+}
+
 p{
 	color: #5c5650;
 	font-size: 1em;
