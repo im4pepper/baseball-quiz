@@ -15,7 +15,7 @@ $(document).ready(function(){
     {
         question:"How many innings must be played to make a Major League game official in the record books?",
         options:[1,2,3],
-        answer:"Each team must complete 5 innings of play for the game to become offical."
+        answer:"Each team must complete 5 innings of play for the game and stats to become offical."
     },
     {
         question:"How many pitches must a pitcher throw to become the pitcher of record?",
