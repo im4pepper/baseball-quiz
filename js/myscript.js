@@ -89,13 +89,9 @@ $(document).ready(function(){
 
     /*--- Quiz reset functions ---*/
     function newQuiz(){
+      //$(".reset").onClick="window.location.reload()";
         console.log("success");
     }
-
-    /*--- Reset Quiz ---*/
-    $(".reset").click(function() {
-    newQuiz();
-    });
 
     });
 
@@ -115,9 +111,16 @@ QuestionView.prototype.nextQuestion = function nextQuestion() {
       this.showQuestion();
       this.handleQuestion();
   } else {
+    this.endofQuiz();
      //end of quiz function 
   }
 }
+
+QuestionView.prototype.endofQuiz = function endofQuiz(){
+    var $stage = $('#stage');
+    $('#stage *').remove();
+    $stage.append("<p class='question' id='question'>" + "&nbsp" +"</p>");
+  }
 
 QuestionView.prototype.showQuestion = function showQuestion(){
     var $stage = $('#stage');
@@ -127,7 +130,7 @@ QuestionView.prototype.showQuestion = function showQuestion(){
   for (var x in this.currentQuestion.choices){
     $stage.append("<button type='button' class='solution'>" + this.currentQuestion.choices[x] +"</button>");
   }
-  $stage.append("<p class='answer' id='answer'>" + "&nbsp" +"</p>");
+  //$stage.append("<p class='answer'>" + "&nbsp" +"</p>");
   //This can be removed if you dont want an infinte loop.
   //this.collection.push(this.currentQuestion);
 }
@@ -135,15 +138,15 @@ QuestionView.prototype.showQuestion = function showQuestion(){
 function rightAnswer(){
         //var $status = $(".answer");
         //$status.empty();
-        //$status.append("Hit!");
-        console.log("correct");
+        //$status.append("Correct!").fadeOut(1400);
+        //console.log("correct");
     };
 
     function wrongAnswer(){
         //var $status = $(".answer");
         //$status.empty();
-        //$status.append('Strike!');
-        console.log("wong answer");
+        //$status.append('Incorrect').fadeOut(1400);
+        //console.log("wong answer");
     };
 
 function clearQuiz (){
@@ -153,11 +156,12 @@ function clearQuiz (){
   for (var x in this.currentQuestion.choices){
     $stage.append("<button type='button' class='solution'>" + this.currentQuestion.choices[x] +"</button>");
   }
+  //$stage.append("<p class='answer'>" + "&nbsp" +"</p>");
 };
 
 QuestionView.prototype.handleQuestion = function handleQuestion(){
   // store a reference to QuestionView so we dont have to type alot
-  $('#stage').on('click', function clickHandler(event) {
+  $('#stage').unbind("click").on('click', function clickHandler(event) {
     event.preventDefault()
     console.log(event.target.innerHTML);
     if (event.target.innerHTML === this.currentQuestion.solution){
@@ -165,6 +169,7 @@ QuestionView.prototype.handleQuestion = function handleQuestion(){
       this.nextQuestion();
     } else {
       wrongAnswer();
+      this.nextQuestion();
     }
   }.bind(this));
 }
