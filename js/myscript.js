@@ -88,10 +88,9 @@ $(document).ready(function(){
     });
 
     /*--- Quiz reset functions ---*/
-    function newQuiz(){
-      //$(".reset").onClick="window.location.reload()";
-        console.log("success");
-    }
+    $(".reset").click(function(){
+        location.reload(true);
+    });
 
     });
 
