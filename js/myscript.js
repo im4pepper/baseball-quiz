@@ -2,73 +2,78 @@ $(document).ready(function(){
 
     /*--- Variables ---*/
     var question1 = {
-        title:"How many outs are there in an inning?",
-        //answer:"Each team gets 3 outs in their half of the inning.",
-        choices:[3,6,9],
-        answer:"6"
-    };
-
+        title: "How many outs are there in an inning?",
+        choices: [3,6,9],
+        //answer: "Each team gets 3 outs in their half of the inning.",
+        solution: "6"
+        //image: "../images/"
+    }
     var question2 = {
-        title:"What is the maximum number of players on the playing field during play?",
-        choices:[9,11,13],
-        answer:"13"
-    };
-
+      title: "How many times may a player re-enter a game after coming out?",
+        choices: [0,1,3],
+        solution: "0"
+    }
     var question3 = {
-        title:"How many pitches must a pitcher throw to become the pitcher of record?",
-        choices:[3,6,9],
-        answer:"6"
-    };
-
+        title: "How many innings make a Major League game official in the record books?",
+        choices: [1,5,9],
+        //answer: "Each team must complete 5 innings of play for the game and stats to become offical.",
+        solution: "5"
+    }
     var question4 = {
-        title:"How many outs are there in an inning?",
-        choices:[3,6,9],
-        answer:"6"
-    };
-
+        title: "How many pitches must a pitcher throw to become the pitcher of record?",
+        choices: [0,5,20],
+        solution: "0"
+    }
     var question5 = {
-        title:"How many outs are there in an inning?",
-        choices:[3,6,9],
-        answer:"6"
-    };
+        title: "What is the maximum number of players on the playing field during play?",
+        choices: [9,11,13],
+        //answer: "There are 9 defenders, and can be up to 4 offensive players.",
+        solution: "13"
+    }
 
-    //Model is a single question...
-//Collection is an array of all questions
-function QuestionCollection(){
-  //Check if its an Array then dont do any operations
-  var arrayList;
-  if(arguments.length === 1 && arguments[0] instanceof Array){
-      arrayList <= arguments[0];
-  }else{
-    //slice is a way to copy an array
-    var slice = Array.prototype.slice;
-    arrayList = slice.apply(arguments)
-  }
+    /*--- Display question/results
+    function newQuestion(options){
+        console.log("options");
+    }*/
 
-  // so map does each but returns an array after the operations
-  return arrayList.map(function(elem){
-    return new Question(elem);
-  });
-}
+    /*--- Display answer/explanation ---*/
+    /*function newAnswer(){
+        var $status = $('.status');
+        $status.empty();
+        $status.append(q);
+    }*/
 
-//MODEL
-function Question(options){
-  this.ensureCorrect(options);
-  console.log(options);
-  this.title = options.title;
-  this.answer = options.answer;
-  this.choices = options.choices;
-  return this;
-}
+    /*--- Display question/results ---*/
+    function newSolution(){
+        console.log("solutions");
+    }
 
-$(document).ready(function(){
-//Create an instance of the QuestionCollection so that
-  var catCollection = new QuestionCollection(data);
-// Every View instance needs an array of questions in order
-// render the current question
-  var catView = new QuestionView(catCollection);
+    function QuestionCollection(){
+        var arrayList;
+        if(arguments.length === 1 && arguments[0] instanceof Array){
+            arrayList = arguments[0];
+        } else {
+            var slice = Array.prototype.slice;
+            arrayList = slice.apply(arguments)
+        }
+        console.log(arrayList);
+        return arrayList.map(function(elem){
+            return new Question(elem);
+        });
+    }
 
-});
+    var collection = new
+    QuestionCollection(question1,question2,question3,question4,question5)
+
+    var view = new QuestionView (collection)
+
+    function Question(options){
+        this.title = options.title;
+        //this.answer = options.answer;
+        this.choices = options.choices;
+        this.solution = options.solution;
+        return this;
+    }
 
     /*--- Display information modal box ---*/
     $(".instruction").click(function(){
@@ -83,28 +88,13 @@ $(document).ready(function(){
     });
 
     /*--- Quiz reset functions ---*/
-    function newQuiz(){
-        console.log("success");
-    }
+    $(".reset").click(function(){
+        location.reload(true);
+    });
 
-    /*--- Reset Quiz ---*/
-    $(".reset").click(function() {
-    newQuiz();
-  });
+    });
 
-    function rightAnswer(){
-        var $status = $('.results');
-        $status.empty();
-        $status.append('Correct!');
-    };
-
-    function wrongAnswer(){
-        var $status = $('.results');
-        $status.empty();
-        $status.append('Incorrect');
-    };
-
-    //VIEW
+//VIEW
 function QuestionView (collection){
   this.collection = collection;
   this.initalize();
@@ -115,38 +105,70 @@ QuestionView.prototype.initalize = function initalize() {
 }
 
 QuestionView.prototype.nextQuestion = function nextQuestion() {
-  if (this.collection.length > 1) {
+  if (this.collection.length >= 1) {
       this.currentQuestion = this.collection.shift(); //return first item array of questions
       this.showQuestion();
       this.handleQuestion();
   } else {
+    this.endofQuiz();
      //end of quiz function 
   }
 }
 
+QuestionView.prototype.endofQuiz = function endofQuiz(){
+    var $stage = $('#stage');
+    $('#stage *').remove();
+    $stage.append("<p class='question' id='question'>" + "&nbsp" +"</p>");
+  }
+
 QuestionView.prototype.showQuestion = function showQuestion(){
-var $stage = $('#stage');
+    var $stage = $('#stage');
   $('#stage *').remove();
-  $stage.prepend(this.currentQuestion.choices);
-  $stage.append(".question" + this.currentQuestion.title);
-  $('.question').text(this.currentQuestion.title);
+  $stage.append("<p class='question' id='question'>" + this.currentQuestion.title +"</p>");
+  $('#question').text(this.currentQuestion.title);
   for (var x in this.currentQuestion.choices){
     $stage.append("<button type='button' class='solution'>" + this.currentQuestion.choices[x] +"</button>");
   }
+  //$stage.append("<p class='answer'>" + "&nbsp" +"</p>");
   //This can be removed if you dont want an infinte loop.
   //this.collection.push(this.currentQuestion);
 }
 
+function rightAnswer(){
+        //var $status = $(".answer");
+        //$status.empty();
+        //$status.append("Correct!").fadeOut(1400);
+        //console.log("correct");
+    };
+
+    function wrongAnswer(){
+        //var $status = $(".answer");
+        //$status.empty();
+        //$status.append('Incorrect').fadeOut(1400);
+        //console.log("wong answer");
+    };
+
+function clearQuiz (){
+    var $stage = $('#stage');
+  $('#stage *').remove(); 
+  $stage.append("<p class='question' id='question'>" + "&nbsp;" +"</p>");
+  for (var x in this.currentQuestion.choices){
+    $stage.append("<button type='button' class='solution'>" + this.currentQuestion.choices[x] +"</button>");
+  }
+  //$stage.append("<p class='answer'>" + "&nbsp" +"</p>");
+};
+
 QuestionView.prototype.handleQuestion = function handleQuestion(){
   // store a reference to QuestionView so we dont have to type alot
-  $('button').on('click', function clickHandler() {
-    if ($('input:checked').val() === this.currentQuestion.answer){
+  $('#stage').unbind("click").on('click', function clickHandler(event) {
+    event.preventDefault()
+    console.log(event.target.innerHTML);
+    if (event.target.innerHTML === this.currentQuestion.solution){
       rightAnswer();
       this.nextQuestion();
     } else {
       wrongAnswer();
+      this.nextQuestion();
     }
   }.bind(this));
 }
-
-    });
