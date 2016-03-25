@@ -1,3 +1,6 @@
+var correctCount=0
+var incorrectCount=0
+
 $(document).ready(function(){
 
     /*--- Variables ---*/
@@ -118,7 +121,7 @@ QuestionView.prototype.nextQuestion = function nextQuestion() {
 QuestionView.prototype.endofQuiz = function endofQuiz(){
     var $stage = $('#stage');
     $('#stage *').remove();
-    $stage.append("<p class='question' id='question'>" + "&nbsp" +"</p>");
+    $stage.append("<p class='question' id='question'>" + "You got " + correctCount + " out of 5 correct!" +"</p>");
   }
 
 QuestionView.prototype.showQuestion = function showQuestion(){
@@ -135,18 +138,20 @@ QuestionView.prototype.showQuestion = function showQuestion(){
 }
 
 function rightAnswer(){
+        correctCount +=1
         //var $status = $(".answer");
         //$status.empty();
         //$status.append("Correct!").fadeOut(1400);
         //console.log("correct");
-    };
+   };
 
-    function wrongAnswer(){
+ function wrongAnswer(){
+        incorrectCount +=1
         //var $status = $(".answer");
         //$status.empty();
         //$status.append('Incorrect').fadeOut(1400);
         //console.log("wong answer");
-    };
+   };
 
 function clearQuiz (){
     var $stage = $('#stage');
